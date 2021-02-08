@@ -1,4 +1,4 @@
-package br.com.zup.desafio.service.impl;
+package br.com.zup.desafio.cadastro;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package br.com.zup.desafio.service.impl;
+package br.com.zup.desafio.pessoa;
 
 import org.springframework.stereotype.Service;
 

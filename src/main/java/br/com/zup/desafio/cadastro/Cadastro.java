@@ -1,4 +1,4 @@
-package br.com.zup.desafio.model;
+package br.com.zup.desafio.cadastro;
 
 import java.util.Date;
 

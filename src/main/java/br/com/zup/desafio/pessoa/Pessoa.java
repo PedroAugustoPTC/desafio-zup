@@ -1,4 +1,4 @@
-package br.com.zup.desafio.model;
+package br.com.zup.desafio.pessoa;
 
 import java.util.Date;
 
@@ -10,7 +10,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity(name = "tb_pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -20,8 +21,7 @@ public class Pessoa {
 	private Long id;
 
 	@NotBlank(message = "CPF não pode ser vazio")
-	@Pattern(regexp = "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message = "Formato de CPF inválido. "
-			+ "Exemplo de formato válido: 000.000.000-00")
+	@CPF(message = "Formato de CPF inválido. " + "Exemplo de formato válido: 000.000.000-00")
 	private String cpf;
 
 	@NotBlank(message = "Nome não pode ser vazio")
@@ -30,22 +30,29 @@ public class Pessoa {
 	@NotBlank(message = "Email não pode ser vazio")
 	@Email(message = "Formato de email inválido. Exemplo de formato válido: xxxxxxx@xxxxxxx")
 	private String email;
-	
+
 	@NotBlank(message = "Data de nascimento não pode ser vazio")
 	private Date dataNascimento;
+
+	
+	public Pessoa(Long id,
+			@NotBlank(message = "CPF não pode ser vazio") @CPF(message = "Formato de CPF inválido. Exemplo de formato válido: 000.000.000-00") String cpf,
+			@NotBlank(message = "Nome não pode ser vazio") String nome,
+			@NotBlank(message = "Email não pode ser vazio") @Email(message = "Formato de email inválido. Exemplo de formato válido: xxxxxxx@xxxxxxx") String email,
+			@NotBlank(message = "Data de nascimento não pode ser vazio") Date dataNascimento) {
+		super();
+		this.id = id;
+		this.cpf = cpf;
+		this.nome = nome;
+		this.email = email;
+		this.dataNascimento = dataNascimento;
+	}
 
 	/**
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	/**
@@ -56,24 +63,10 @@ public class Pessoa {
 	}
 
 	/**
-	 * @param cpf the cpf to set
-	 */
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	/**
 	 * @return the nome
 	 */
 	public String getNome() {
 		return nome;
-	}
-
-	/**
-	 * @param nome the nome to set
-	 */
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	/**
@@ -84,24 +77,10 @@ public class Pessoa {
 	}
 
 	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
 	 * @return the dataNascimento
 	 */
 	public Date getDataNascimento() {
 		return dataNascimento;
-	}
-
-	/**
-	 * @param dataNascimento the dataNascimento to set
-	 */
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 
 	@Override
@@ -152,6 +131,5 @@ public class Pessoa {
 			return false;
 		return true;
 	}
-	
-	
+
 }
