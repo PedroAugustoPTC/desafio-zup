@@ -15,7 +15,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Exists {
 
-	String message() default "Valor não existe.";
+	String message() default "Valor não existe no banco.";
 
 	Class<?>[] groups() default {};
 

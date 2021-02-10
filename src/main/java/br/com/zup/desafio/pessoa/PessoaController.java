@@ -2,11 +2,9 @@ package br.com.zup.desafio.pessoa;
 
 import java.net.URI;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,16 +16,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/pessoa")
 public class PessoaController {
 
-	@PersistenceContext
-    private EntityManager entityManager;
+	@Autowired
+	private PessoaRepository repository;
 
-    @PostMapping
-    @Transactional
-    public ResponseEntity<String> cadastrar(@RequestBody @Valid PessoaRequest request, UriComponentsBuilder uriBuilder) {
-        Pessoa pessoa = request.toModel();
-        entityManager.persist(pessoa);
+	@PostMapping
+	public ResponseEntity<String> cadastrar(@RequestBody @Valid PessoaRequest request,
+			UriComponentsBuilder uriBuilder) {
+		Pessoa pessoa = request.toModel();
+		repository.save(pessoa);
 
-        URI uri = uriBuilder.path("/pessoa/{id}").buildAndExpand(pessoa.getId()).toUri();
-        return ResponseEntity.created(uri).body(pessoa.toString());
-    }
+		URI uri = uriBuilder.path("/pessoa/{id}").buildAndExpand(pessoa.getId()).toUri();
+		return ResponseEntity.created(uri).body(pessoa.toString());
+	}
 }
